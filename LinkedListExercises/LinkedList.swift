@@ -18,6 +18,7 @@ public class Node<T> {
 
 public class LinkedList<T: Equatable> {
     var head: Node<T>?
+    
     func printAllKeys() {
         var currentNode = head
         while currentNode != nil {
@@ -26,21 +27,76 @@ public class LinkedList<T: Equatable> {
         }
     }
 
-    var count: Int {return 0}
+    var count: Int {
+        var count = 0
+        var currentNode = head
+        while currentNode != nil {
+            currentNode = currentNode?.next
+            count += 1
+        }
+        return count
+    }
     
-    func append(element newKey: T) {}
+    func append(element newKey: T) {
+        if head == nil {
+            head = Node(key: newKey)
+            return
+        }
+        var currentNode = head
+        while currentNode?.next != nil {
+            currentNode = currentNode?.next
+        }
+        currentNode?.next = Node(key: newKey)
+    }
+
     
-    func getNode<T>(at index: Int) -> Node<T>? {return nil}
+    func getNode(at index: Int) -> Node<T>? {
+        var counter = 0
+        var currentNode = head
+        while counter < index {
+            currentNode = currentNode?.next
+            counter += 1
+        }
+        return currentNode
+    }
+
     
-    func contains<T>(element targetKey: T) -> Bool {return false}
+    func contains(element targetKey: T) -> Bool {
+        var currentNode = head
+        while currentNode != nil{
+            if currentNode?.key == targetKey {return true}
+            currentNode = currentNode?.next
+        }
+        return false
+    }
     
-    func equals<T>(otherList: LinkedList<T>) -> Bool {return true}
+    func equals<T>(otherList: LinkedList<T>) -> Bool {
+        var test = Bool()
+        for i in 0...otherList.count{
+        guard let otherNode = getNode(at: i) else {fatalError("Haha")}
+            // not done
+        }
+        return true
+        
+    }
     
     func toArr<T>() -> [T] {return Array<T>()}
     
     func reversed<T>() -> LinkedList<T> {return LinkedList<T>()}
     
-    func removeAll() {}
+    func delete(at index: Int) {
+        guard let nodeBefore = getNode(at: index - 1) else {
+            if index == 0 {
+                head = head?.next
+            }
+            return
+        }
+        nodeBefore.next = nodeBefore.next?.next
+    }
+    
+    func removeAll() {
+        
+    }
     
     //Challenge Questions
     func removeDuplicatesFromSortedList() {}
@@ -48,9 +104,6 @@ public class LinkedList<T: Equatable> {
     static func mergeSortedLists<T>(listOne: LinkedList<T>, listTwo: LinkedList<T>) -> LinkedList<T> {
         return LinkedList<T>()
     }
-    
-    
-
-
 }
+
 
